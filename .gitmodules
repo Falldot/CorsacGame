@@ -1,0 +1,12 @@
+[submodule "packages/Corsac_STL"]
+	path = packages/Corsac_STL
+	url = https://github.com/Falldot/Corsac_STL.git
+[submodule "packages/Corsac_ECS"]
+	path = packages/Corsac_ECS
+	url = https://github.com/Falldot/Corsac_ECS.git
+[submodule "packages/Corsac_Test"]
+	path = packages/Corsac_Test
+	url = https://github.com/Lirik-Keltran/Corsac-Test.git
+[submodule "packages/Corsac_Benchmark"]
+	path = packages/Corsac_Benchmark
+	url = https://github.com/Lirik-Keltran/Corsac-Benchmark.git
