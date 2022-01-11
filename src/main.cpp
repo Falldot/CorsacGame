@@ -7,6 +7,9 @@
 
 #include "Corsac/ecs.h"
 
+#define SDL_MAIN_HANDLED
+#include "SDL.h"
+
 void* __cdecl operator new[](size_t size, const char* name, int flags, unsigned debugFlags, const char* file, int line)
 {
     return new uint8_t[size];
@@ -136,15 +139,42 @@ void Draw()
     std::cout << output;
 }
 
-int main()
+
+int main(int argc, char **argv)
 {
+    if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
+		return 1;
+
+    SDL_Window* Window = SDL_CreateWindow("Corsac Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
+	if (Window == NULL)
+		return 1;
+
+    SDL_Renderer* Renderer = SDL_CreateRenderer(Window, -1, SDL_RENDERER_ACCELERATED);
+	if (Renderer == NULL)
+		return 1;
+
+    SDL_SetRenderDrawColor(Renderer, 0, 0, 0, 255);
+	SDL_RenderClear(Renderer);
+
     corsac::Entity<Person>()
             .fit<Position>(2, 2)
             .fit<Speed>(1)
             .fit<Direction>(0, 0);
 
-    while(true)
+    SDL_Event e;
+    bool quit = false;
+    while(!quit)
     {
+        while(SDL_PollEvent(&e) != 0 )
+        {
+            if( e.type == SDL_QUIT )
+            {
+                quit = true;
+            }
+        }
+        SDL_SetRenderDrawColor(Renderer, 0, 0, 0, 255);
+	    SDL_RenderClear(Renderer);
+        // Systems
         KeyEventSystem();
         WMovebleEvent();
         SMovebleEvent();
@@ -152,6 +182,13 @@ int main()
         AMovebleEvent();
         Move();
         Draw();
+        ///////////////////////
+        SDL_RenderPresent(Renderer);
     }
+
+    SDL_DestroyRenderer(Renderer);
+	SDL_DestroyWindow(Window);
+	SDL_Quit();
+
     return 0;
 }

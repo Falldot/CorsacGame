@@ -10,3 +10,6 @@
 [submodule "packages/Corsac_Benchmark"]
 	path = packages/Corsac_Benchmark
 	url = https://github.com/Lirik-Keltran/Corsac-Benchmark.git
+[submodule "packages/SDL"]
+	path = packages/SDL
+	url = https://github.com/libsdl-org/SDL.git
